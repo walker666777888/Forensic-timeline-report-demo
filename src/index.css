@@ -1,0 +1,159 @@
+@import 'tailwindcss';
+
+/* `dark:` utilities follow the .dark class that index.html / App.tsx set on <html>. */
+@custom-variant dark (&:where(.dark, .dark *));
+
+/* Tokens mirror the live TARI Ethics app (:root on tari-whistleblower.vercel.app). */
+@theme {
+  --font-sans: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  --font-mono: ui-monospace, 'SF Mono', 'Cascadia Mono', Consolas, monospace;
+  --color-navy: #1e1b4b;
+  --color-navy-soft: #312e81;
+  --color-page: #f8fafc;
+  --color-surface: #ffffff;
+  --color-raised: #ffffff;
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/*
+ * Dark theme: "evidence room after hours".
+ * Warm graphite surfaces (never navy, never pure black), warm off-white ink
+ * (never pure white), and every hue lowered to a muted ink tone. Depth comes
+ * from stepped surface tones and hairlines, not glow. Neutral and tint scales
+ * are remapped so the same classes compose both themes.
+ */
+.dark {
+  color-scheme: dark;
+  --color-page: #131312;
+  --color-surface: #1a1a18;
+  --color-raised: #21211f;
+
+  /* Neutrals: graphite with a faint warm cast. */
+  --color-slate-50: #1e1e1c;
+  --color-slate-100: #252523;
+  --color-slate-200: #34332f;
+  --color-slate-300: #46443f;
+  --color-slate-400: #6c6962;
+  --color-slate-500: #9c978d;
+  --color-slate-600: #b1aca2;
+  --color-slate-700: #cac5ba;
+  --color-slate-800: #ddd8cd;
+  --color-slate-900: #ece8df;
+
+  /* Messages: slate-blue ink. */
+  --color-blue-50: #1a2333;
+  --color-blue-100: #222e44;
+  --color-blue-200: #31415e;
+  --color-blue-300: #4d5f7d;
+  --color-blue-500: #8397bb;
+  --color-blue-600: #3a5580;
+  --color-blue-700: #a9bbdb;
+  --color-blue-800: #c4d0e6;
+
+  /* Evidence: verdigris. */
+  --color-teal-50: #152624;
+  --color-teal-100: #1b302d;
+  --color-teal-200: #2a4843;
+  --color-teal-300: #8cc4b8;
+  --color-teal-600: #5f9d91;
+  --color-teal-700: #336b62;
+  --color-teal-800: #acd8ce;
+
+  /* Privileged: aged ochre. */
+  --color-amber-50: #231e15;
+  --color-amber-100: #2c2519;
+  --color-amber-200: #3f3524;
+  --color-amber-300: #6a5533;
+  --color-amber-400: #8a6d3e;
+  --color-amber-700: #d8b173;
+  --color-amber-800: #e3c590;
+  --color-amber-900: #eed9b2;
+
+  --flash-bg: #22302c;
+  --flash-ring: #43655c;
+}
+
+html {
+  background: var(--color-page);
+  color: var(--color-slate-900);
+  -webkit-font-smoothing: antialiased;
+  scrollbar-color: var(--color-slate-300) transparent;
+}
+
+::selection {
+  background: #ccfbf1;
+  color: #0f172a;
+}
+
+.dark ::selection {
+  background: #3d4f49;
+  color: #f4f1ea;
+}
+
+:focus-visible {
+  outline: 2px solid #0f766e;
+  outline-offset: 2px;
+}
+
+.dark :focus-visible {
+  outline-color: #b9d8cf;
+}
+
+mark {
+  background: #fef08a;
+  color: inherit;
+  border-radius: 2px;
+  padding: 0 1px;
+}
+
+.dark mark {
+  background: #5b4a22;
+  color: #f4e9cc;
+}
+
+/* A record reached from the lifecycle strip glows briefly, then settles. */
+@keyframes record-flash {
+  0%,
+  35% {
+    background-color: var(--flash-bg, #f0fdfa);
+    box-shadow: 0 0 0 1px var(--flash-ring, #99f6e4);
+  }
+  100% {
+    background-color: transparent;
+    box-shadow: 0 0 0 1px transparent;
+  }
+}
+
+.record-flash {
+  animation: record-flash 1.8s var(--ease-out-expo);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .record-flash {
+    animation: none;
+    background-color: var(--flash-bg, #f0fdfa);
+    box-shadow: 0 0 0 1px var(--flash-ring, #99f6e4);
+  }
+  html {
+    scroll-behavior: auto;
+  }
+}
+
+/* Privileged material reads as sealed: a faint diagonal hatch on amber. */
+.hatch-amber {
+  background-color: #fef3c7;
+  background-image: repeating-linear-gradient(
+    135deg,
+    rgb(180 83 9 / 0.1) 0 6px,
+    transparent 6px 12px
+  );
+}
+
+.dark .hatch-amber {
+  background-color: #2c2519;
+  background-image: repeating-linear-gradient(
+    135deg,
+    rgb(216 177 115 / 0.09) 0 6px,
+    transparent 6px 12px
+  );
+}
